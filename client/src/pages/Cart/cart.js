@@ -1,13 +1,13 @@
 import React from "react";
 import Navbar from "../../components/Navbar/Navbar";
-import Product from "../../components/Products/product";
+import Cart from "../../components/Cart/cart";
 
 export default function Products() {
   return (
     <>
       <Navbar />
-      <h1>All Products</h1>
-      <Product />
+      <h1>Cart</h1>
+      <Cart />
     </>
   );
 }

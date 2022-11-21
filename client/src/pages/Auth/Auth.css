@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 
-/* BASIC */
-
 html {
   background-color: #56baed;
 }
@@ -27,10 +25,6 @@ h2 {
   margin: 40px 8px 10px 8px; 
   color: #cccccc;
 }
-
-
-
-/* STRUCTURE */
 
 .wrapper {
   display: flex;
@@ -65,10 +59,6 @@ h2 {
   border-radius: 0 0 10px 10px;
 }
 
-
-
-/* TABS */
-
 h2.inactive {
   color: #cccccc;
 }
@@ -77,10 +67,6 @@ h2.active {
   color: #0d0d0d;
   border-bottom: 2px solid #5fbae9;
 }
-
-
-
-/* FORM TYPOGRAPHY*/
 
 input[type=button], input[type=submit], input[type=reset]  {
   background-color: #56baed;
@@ -146,8 +132,6 @@ input[type=text]:placeholder {
   color: #cccccc;
 }
 
-
-
 .loginBtn{
   display: block;
   margin: auto;
@@ -159,9 +143,6 @@ input[type=text]:placeholder {
   border-radius: 10px;
 
 }
-
-
-/* ANIMATIONS */
 
 /* Simple CSS3 Fade-in-down Animation */
 .fadeInDown {
@@ -262,10 +243,6 @@ input[type=text]:placeholder {
 .underlineHover:hover:after{
   width: 100%;
 }
-
-
-
-/* OTHERS */
 
 *:focus {
     outline: none;

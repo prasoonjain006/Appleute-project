@@ -1,0 +1,25 @@
+.flex-wrap{
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.card-products{
+    margin: 10px;
+}
+
+.add-to-cart-btn{
+    border: 1px black ;
+    border-radius: 20px;
+    margin-top: 10px;
+    background-color: rgb(172, 197, 233);
+}
+
+.checkout-btn{
+    border: 1px black ;
+    border-radius: 20px;
+    margin-top: 10px;
+    background-color: rgb(133, 239, 181);
+    padding: 15px;
+}

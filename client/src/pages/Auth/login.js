@@ -1,18 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Auth.css";
-// import { useAlert } from 'react-alert'
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { useEffect, useState } from "react";
-import { Redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const cookies = new Cookies();
-  const history = useNavigate();
-  // const alert = useAlert()
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get(`https://appleute-api.herokuapp.com/api/auth/checkauth`, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "x-access-token": cookies.get("token"),
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate("/products");
+      })
+      .catch((err) => {
+        console.log(err);
+        cookies.set("token", "");
+        navigate("/login");
+      });
+  }, []);
 
   function Updatesubmit(e) {
     e.preventDefault();
@@ -20,27 +37,21 @@ export default function Login() {
       alert.error("Enter password and email");
     } else {
       axios
-        .post(`http://localhost:5000/api/auth/signin`, {
+        .post(`https://appleute-api.herokuapp.com/api/auth/signin`, {
           email: email,
           password: password,
         })
         .then((res) => {
           alert("Login success");
           console.log(res.data);
-
-          cookies.set("id", res.data.user._id);
-          cookies.set("token", res.data.user.token);
-          cookies.set("email", res.data.user.email);
-          history.push("/home");
-          window.location.reload();
+          cookies.set("id", res.data.id);
+          cookies.set("token", res.data.accessToken);
+          cookies.set("email", res.data.email);
+          navigate("/products");
         })
         .catch((err) => {
           console.log(err);
-          if (err.response.data.msg) {
-            alert.show(err.response.data.msg);
-          } else {
-            alert("invalid email or password");
-          }
+          alert("Some error");
         });
     }
   }
@@ -85,11 +96,6 @@ export default function Login() {
           </button>
         </form>
         {/* Remind Passowrd */}
-        <div id="formFooter">
-          <Link style={{ textDecoration: "none" }} to="/forgot-password">
-            <p>Forgot Password?</p>
-          </Link>
-        </div>
       </div>
     </div>
   );

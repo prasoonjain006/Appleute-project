@@ -1,24 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Auth.css";
-
+import Cookies from "universal-cookie";
 import axios from "axios";
-import { Redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
-  const [accountType, setAccountType] = useState("");
-
+  const cookies = new Cookies();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
 
-  const history = useNavigate();
-
-  useEffect(() => {}, []);
+  useEffect(() => {
+    axios
+      .get(`https://appleute-api.herokuapp.com/api/auth/checkauth`, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "x-access-token": cookies.get("token"),
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate("/products");
+      })
+      .catch((err) => {
+        console.log(err);
+        cookies.set("token", "");
+      });
+  }, []);
 
   function Updatesubmit(e) {
     e.preventDefault();
-
     if (password === "" || email === "" || confirmPassword === "") {
       alert("Enter all the fields");
     } else if (password != confirmPassword) {
@@ -27,14 +40,13 @@ export default function Signup() {
       alert("Password must be 6 digit long");
     } else {
       axios
-        .post(`http://localhost:5000/api/auth/signup`, {
+        .post(`https://appleute-api.herokuapp.com/api/auth/signup`, {
           email: email,
           password: password,
         })
         .then((res) => {
           console.log("response from submitting the form successful", res.data);
           alert("Registered successfully, you can log in now");
-          // history.push("/login");
         })
         .catch((err) => {
           console.log(err);
@@ -47,18 +59,12 @@ export default function Signup() {
   return (
     <div className="wrapper fadeInDown">
       <div id="formContent">
-        {/* Tabs Titles */}
         <Link to="/login">
           <h2 className="inactive underlineHover"> Sign In </h2>
         </Link>
-
         <Link to="/signup">
           <h2 className="active ">Sign Up </h2>
         </Link>
-        {/* Icon */}
-
-        {/* Login Form */}
-
         <form>
           <input
             onChange={(e) => setEmail(e.target.value)}

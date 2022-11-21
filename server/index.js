@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const mongoose = require("mongoose");
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 console.log("A");
 console.log(process.env.MONGODB_STRING);

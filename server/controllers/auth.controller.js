@@ -77,3 +77,8 @@ exports.allusers = (req, res) => {
     });
   });
 };
+
+exports.checkauth = (req, res) => {
+ 
+  res.status(200).send("true");
+};

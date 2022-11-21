@@ -19,4 +19,6 @@ module.exports = function (app) {
 
   app.post("/api/auth/signin", controller.signin);
   app.get("/api/auth/allusers", controller.allusers);
+  app.get("/api/auth/checkauth", [auth.verifyToken], controller.checkauth);
+  
 };

@@ -3,8 +3,10 @@ const Product = require("../models/products");
 
 module.exports.get_cart_items = async (req, res) => {
   const userId = req.params.id;
+  console.log(userId);
   try {
     let cart = await Cart.findOne({ userId });
+    console.log(cart);
     if (cart && cart.items.length > 0) {
       res.send(cart);
     } else {
@@ -33,7 +35,7 @@ module.exports.add_multiple_products = async (req, res) => {
       let price = 0;
       items.forEach((item, ind) => {
         price = price + item.price;
-        const name = item.title;
+        const name = item.name;
         const productId = item._id;
         let itemIndex = cart.items.findIndex((p) => p.productId == productId);
         let quantity = cart.items[itemIndex].quantity + 1;
@@ -77,7 +79,7 @@ module.exports.add_multiple_products = async (req, res) => {
 };
 
 module.exports.add_cart_item = async (req, res) => {
-  const userId = req.body.id;
+  const userId = req.body.userId;
   const { productId, quantity } = req.body;
 
   try {
@@ -86,10 +88,10 @@ module.exports.add_cart_item = async (req, res) => {
     if (!item) {
       res.status(404).send("Item not found!");
     }
-    console.log(item);
-    const price = item.price;
-    const name = item.title;
-
+    console.log("91",item);
+    const price = item.price; 
+    const name = item.name;
+    console.log(name);
     if (cart) {
       // if cart exists for the user
       let itemIndex = cart.items.findIndex((p) => p.productId == productId);
@@ -121,10 +123,13 @@ module.exports.add_cart_item = async (req, res) => {
 };
 
 module.exports.delete_item = async (req, res) => {
-  const userId = req.body.id;
+  console.log(req.body);
+  const userId = req.body.userId;
   const productId = req.body.productId;
+  console.log(userId +" check this" + productId)
   try {
     let cart = await Cart.findOne({ userId });
+    console.log(cart);
     let itemIndex = cart.items.findIndex((p) => p.productId == productId);
     console.log(itemIndex);
     if (itemIndex > -1) {
