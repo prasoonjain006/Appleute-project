@@ -6,6 +6,10 @@ dotenv.config();
 const mongoose = require("mongoose");
 const port = process.env.PORT || 5000;
 
+const cors = require('cors')
+
+app.use(cors()) 
+
 console.log("A");
 console.log(process.env.MONGODB_STRING);
 mongoose
